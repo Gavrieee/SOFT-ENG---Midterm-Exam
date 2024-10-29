@@ -72,9 +72,11 @@ if (!isset($_SESSION['username'])) {
 	<?php $getUserByID = getUserByID($pdo, $_GET['user_id']); ?>
 	<div clas="main">
 		<div class="mainInner">
-			<h1>Username: <span style="font-weight: normal"><?php echo $getUserByID['username']; ?></span></h1>
-			<h1>Date Joined: <span style="font-weight: normal"><?php echo $getUserByID['date_added']; ?></span></h1>
-			<h1>Password: <span style="font-weight: normal"><?php echo $getUserByID['password']; ?></span></h1>
+			<h3>Username: <span style="font-weight: normal"><?php echo $getUserByID['username']; ?></span></h3>
+			<h3>Date Joined: <span style="font-weight: normal"><?php echo $getUserByID['date_added']; ?></span></h3>
+			<h3>Library Staff ID: <span style="font-weight: normal"><?php echo $getUserByID['library_staff_id']; ?></span></h3>
+			<h3>Employment Type: <span style="font-weight: normal"><?php echo $getUserByID['employment_type']; ?></span></h3>
+			<h3>Contact Number: <span style="font-weight: normal"><?php echo $getUserByID['contact_number']; ?></span></h3>
 		</div>
 	</div>
 
