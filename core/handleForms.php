@@ -6,14 +6,17 @@ if (isset($_POST['registerUserBtn'])) {
 
 	$username = stripslashes(trim($_POST['username']));
 	$password = stripslashes(trim($_POST['password']));
+	$library_staff_id = $_POST['library_staff_id'];
+	$employment_type = $_POST['employment_type'];
+	$contact_number = $_POST['contact_number'];
 
 	$plain_password = $password;
 
-	$hashed_password = password_hash($plain_password, PASSWORD_DEFAULT);
+	$hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-	if (!empty($username) && !empty($plain_password)) {
+	if (!empty($username) && !empty($password) && !empty($library_staff_id) && !empty($employment_type) && !empty($contact_number)) {
 
-		$insertQuery = insertNewUser($pdo, $username, $plain_password);
+		$insertQuery = insertNewUser($pdo, $username, $plain_password, $library_staff_id, $employment_type, $contact_number);
 
 		if ($insertQuery) {
 			header("Location: ../login.php");
@@ -26,7 +29,7 @@ if (isset($_POST['registerUserBtn'])) {
 		$_SESSION['message'] = "Please make sure the input fields 
 		are not empty for registration!";
 
-		header("Location: ../login.php");
+		header("Location: ../register.php");
 	}
 
 }
