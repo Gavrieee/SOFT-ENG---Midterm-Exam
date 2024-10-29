@@ -2,7 +2,7 @@
 
 require_once 'dbConfig.php';
 
-function insertNewUser($pdo, $username, $plain_password)
+function insertNewUser($pdo, $username, $plain_password, $library_staff_id, $employment_type, $contact_number)
 {
 
 	$checkUserSql = "SELECT * FROM user_passwords WHERE username = ?";
@@ -11,9 +11,9 @@ function insertNewUser($pdo, $username, $plain_password)
 
 	if ($checkUserSqlStmt->rowCount() == 0) {
 
-		$sql = "INSERT INTO user_passwords (username,password) VALUES(?,?)";
+		$sql = "INSERT INTO user_passwords (username,password,library_staff_id,employment_type,contact_number) VALUES(?,?,?,?,?)";
 		$stmt = $pdo->prepare($sql);
-		$executeQuery = $stmt->execute([$username, $plain_password]);
+		$executeQuery = $stmt->execute([$username, $plain_password, $library_staff_id, $employment_type, $contact_number]);
 
 		if ($executeQuery) {
 			return true;
@@ -54,16 +54,17 @@ function loginUser($pdo, $username, $entered_password)
 		$passwordFromDB = $userInfoRow['password'];
 
 		/*Checks the hash of the entered password from Log In*/
-		$ent_hashPass = password_hash($entered_password, PASSWORD_DEFAULT);
-
-		if ($entered_password == $passwordFromDB) {
+		/*$ent_hashPass = password_hash($entered_password, PASSWORD_DEFAULT);
+		*/
+		if (/*password_verify($entered_password, $hashed_password_from_db)*/$entered_password == $passwordFromDB) {
 			$_SESSION['username'] = $username;
 			/*$_SESSION['message'] = "Login successful!";*/
 			return true;
 		} else {
-			$_SESSION['message'] = "Password is invalid, but user exists";
-
-			echo $_SESSION['message'] = "Hashed Entered Password: " . $_SESSION['message'] = $ent_hashPass . "\n Entered Password:" . $entered_password . "\nHashed Password from the DB: " . $_SESSION['message'] = $hashed_password_from_db . " = " . $passwordFromDB;
+			
+			
+			echo $_SESSION['message'] = "Hashed Entered Password:  = " . /*$ent_hashPass . */"\n Entered Password:" . $entered_password . "\nHashed Password from the DB: " . $hashed_password_from_db . " = " . $passwordFromDB;
+			
 			return false;
 		}
 	} else {
